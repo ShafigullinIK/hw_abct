@@ -36,15 +36,15 @@ def search_by_year(year):
 @app.route('/suggest/<count>', methods=['POST'])
 def suggest_topk(count):
     count = int(count)
-    l = list(range(100))
+    l = list(range(0, 100))
     content = request.get_json()
     for key in content.keys():
-        l.remove(int(key[-3:]))
+        l.remove(int(key[-3:]) - 1)
     response = {}
     for _ in range(count):
         number = random.choice(l)
         l.remove(number)
-        response[number] = random.randint(0, 5)
+        response[data.iloc[number]["tconst"]] = random.randint(0, 5)
     return jsonify(response)
 
 
